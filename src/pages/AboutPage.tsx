@@ -18,6 +18,7 @@ import Accordion from "@mui/material/Accordion";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import Typography from "@mui/material/Typography";
 import { AccordionSummary } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 const faqData = [
   {
@@ -36,13 +37,29 @@ const faqData = [
     q: "What are your opening hours?",
     a: "We are open Mon-Fri: 9am-10pm and Sat-Sun: 9am-7pm.",
   },
-   {
-    q: "What are your opening hours?",
-    a: "We are open Mon-Fri: 9am-10pm and Sat-Sun: 9am-7pm.",
+  {
+    q: "Do you host private events or parties?",
+    a: "Yes, we have a dedicated space for private events. Please contact our management team for bookings.",
   },
 ];
 
+const sliderImages = [
+  "https://images.pexels.com/photos/70497/pexels-photo-70497.jpeg?auto=compress&cs=tinysrgb&w=600",
+  "https://images.pexels.com/photos/1099680/pexels-photo-1099680.jpeg?auto=compress&cs=tinysrgb&w=600",
+  "https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg?auto=compress&cs=tinysrgb&w=600",
+  "https://images.pexels.com/photos/1633525/pexels-photo-1633525.jpeg?auto=compress&cs=tinysrgb&w=600",
+  "https://images.pexels.com/photos/1640772/pexels-photo-1640772.jpeg?auto=compress&cs=tinysrgb&w=600",
+];
+
+const faqImages = [
+  "https://images.pexels.com/photos/262978/pexels-photo-262978.jpeg?auto=compress&cs=tinysrgb&w=400",
+  "https://images.pexels.com/photos/1581384/pexels-photo-1581384.jpeg?auto=compress&cs=tinysrgb&w=400",
+  "https://images.pexels.com/photos/67468/pexels-photo-67468.jpeg?auto=compress&cs=tinysrgb&w=400",
+  "https://images.pexels.com/photos/67468/pexels-photo-67468.jpeg?auto=compress&cs=tinysrgb&w=400",
+];
+
 const AboutPage: React.FC = () => {
+  const navigate = useNavigate()
   return (
     <Box sx={{ bgcolor: "#0D0D0D", minHeight: "100vh", pb: 10 }}>
       <PageHeader title="About Us" breadcrumb="About" />
@@ -76,7 +93,7 @@ const AboutPage: React.FC = () => {
                   >
                     <CardMedia
                       component="img"
-                      image="/mnt/data/About us.png"
+                      image="https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg?auto=compress&cs=tinysrgb&w=800"
                       sx={{ width: "100%", height: "100%", objectFit: "cover" }}
                     />
                   </Box>
@@ -97,7 +114,7 @@ const AboutPage: React.FC = () => {
                   >
                     <CardMedia
                       component="img"
-                      image="https://images.unsplash.com/photo-1513104890138-7c749659a591"
+                      image="https://images.pexels.com/photos/376464/pexels-photo-376464.jpeg?auto=compress&cs=tinysrgb&w=600"
                       sx={{ width: "100%", height: "100%", objectFit: "cover" }}
                     />
                   </Box>
@@ -152,6 +169,7 @@ const AboutPage: React.FC = () => {
                       mx: { xs: "auto", md: 0 },
                       "&:hover": { bgcolor: "#d17b38" },
                     }}
+                    onClick={()=>navigate("/contact")}
                   >
                     CONTACT US
                   </Button>
@@ -171,9 +189,9 @@ const AboutPage: React.FC = () => {
               "&::-webkit-scrollbar": { display: "none" },
             }}
           >
-            {[1, 2, 3, 4, 5].map((item) => (
+            {sliderImages.map((imgUrl, index) => (
               <Box
-                key={item}
+                key={index}
                 sx={{
                   position: "relative",
                   minWidth: "240px",
@@ -185,7 +203,7 @@ const AboutPage: React.FC = () => {
               >
                 <CardMedia
                   component="img"
-                  image={`https://images.unsplash.com/photo-1514320298574-2b1d530910a3?sig=${item}`}
+                  image={imgUrl}
                   sx={{ height: "100%", objectFit: "cover" }}
                 />
                 <Box
@@ -262,7 +280,6 @@ const AboutPage: React.FC = () => {
           ))}
         </Grid>
 
-        {/* 4. FAQ */}
         <Box sx={{ textAlign: "center", mb: 8 }}>
           <Typography variant="h4" sx={{ color: "white", fontWeight: 900 }}>
             Frequently Asked Question
@@ -272,8 +289,8 @@ const AboutPage: React.FC = () => {
         <Grid container spacing={6} alignItems="flex-start">
           <Grid size={{ xs: 12, md: 5 }}>
             <Grid container spacing={2}>
-              {[1, 2, 3, 4].map((i) => (
-                <Grid size={{ xs: 6 }} key={i}>
+              {faqImages.map((imgUrl, index) => (
+                <Grid size={{ xs: 6 }} key={index}>
                   <Box
                     sx={{
                       borderRadius: "20px",
@@ -283,7 +300,7 @@ const AboutPage: React.FC = () => {
                   >
                     <CardMedia
                       component="img"
-                      image={`https://images.unsplash.com/photo-1504674900247-0877df9cc836?sig=${i}`}
+                      image={imgUrl}
                       sx={{ height: "100%", objectFit: "cover" }}
                     />
                   </Box>
@@ -305,9 +322,9 @@ const AboutPage: React.FC = () => {
                 }}
               >
                 <AccordionSummary
-                  expandIcon={<ExpandMoreIcon  sx={{ color: "#fff" }} />}
-                  aria-controls="panel1-content"
-                  id="panel1-header"
+                  expandIcon={<ExpandMoreIcon sx={{ color: "#fff" }} />}
+                  aria-controls={`panel${index}-content`}
+                  id={`panel${index}-header`}
                 >
                   <Typography component="span">{item.q}</Typography>
                 </AccordionSummary>

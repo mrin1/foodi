@@ -1,6 +1,7 @@
 import React from 'react';
 import { Box, Typography, Button, Stack, Container, styled } from '@mui/material';
 import BannerImg from '../../assets/images/home/banner-img.png';
+import { useNavigate } from 'react-router-dom';
 
 const OutlineButton = styled(Button)({
   border: '1px solid rgba(255, 255, 255, 0.4)',
@@ -17,6 +18,7 @@ const OutlineButton = styled(Button)({
 });
 
 const HeroSection: React.FC = () => {
+   const navigate = useNavigate()
   return (
     <Box
       sx={{
@@ -81,7 +83,7 @@ const HeroSection: React.FC = () => {
             Taste Happiness In <br /> Every Bite
           </Typography>
           <Stack direction="row" spacing={3} alignItems="center">
-            <OutlineButton>
+            <OutlineButton onClick={()=>navigate("/menu")}>
               Explore Menu
             </OutlineButton>
             
@@ -97,6 +99,7 @@ const HeroSection: React.FC = () => {
                   textDecoration: 'underline',
                 },
               }}
+              onClick={()=>navigate("/reservation")}
             >
               Reservation
             </Button>

@@ -9,7 +9,9 @@ import {
   Rating,
   Stack,
 } from "@mui/material";
+
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import ShoppingBasketOutlinedIcon from "@mui/icons-material/ShoppingBasketOutlined";
 
 interface MenuCardProps {
   image: string;
@@ -33,14 +35,13 @@ const MenuCard: React.FC<MenuCardProps> = ({
       sx={{
         width: "100%",
         maxWidth: 360,
-        bgcolor: "#1A1A1A", // Dark grey/black card background
+        bgcolor: "#1A1A1A",
         color: "white",
         borderRadius: "12px",
         overflow: "hidden",
         boxShadow: "0px 4px 20px rgba(0,0,0,0.5)",
       }}
     >
-      {/* Image Section with Heart Icon */}
       <Box sx={{ position: "relative" }}>
         <CardMedia
           component="img"
@@ -64,7 +65,6 @@ const MenuCard: React.FC<MenuCardProps> = ({
       </Box>
 
       <CardContent sx={{ p: 3 }}>
-        {/* Star Rating */}
         <Stack direction="row" spacing={0.5} sx={{ mb: 1 }}>
           <Rating
             value={rating}
@@ -74,7 +74,6 @@ const MenuCard: React.FC<MenuCardProps> = ({
           />
         </Stack>
 
-        {/* Title */}
         <Typography
           variant="h6"
           sx={{ fontWeight: "600", color: "#FF9F0D", mb: 1 }}
@@ -82,7 +81,6 @@ const MenuCard: React.FC<MenuCardProps> = ({
           {title}
         </Typography>
 
-        {/* Description */}
         <Typography
           variant="body2"
           sx={{ color: "#828282", mb: 2, fontSize: "0.85rem" }}
@@ -90,7 +88,6 @@ const MenuCard: React.FC<MenuCardProps> = ({
           {description}
         </Typography>
 
-        {/* Price and Cart Icon */}
         <Stack
           direction="row"
           justifyContent="space-between"
@@ -112,12 +109,12 @@ const MenuCard: React.FC<MenuCardProps> = ({
               "&:hover": { bgcolor: "#FF9F0D", color: "black" },
             }}
             onClick={(e) => {
-              e.stopPropagation(); // Prevents card clicks if you later add a detail page
+              e.stopPropagation();
               onAddToCart();
             }}
           >
             <Box component="span" sx={{ fontSize: "18px" }}>
-              🛒
+              <ShoppingBasketOutlinedIcon fontSize="small" />
             </Box>
           </IconButton>
         </Stack>

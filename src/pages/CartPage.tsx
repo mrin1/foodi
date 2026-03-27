@@ -1,4 +1,3 @@
-
 import {
   Box,
   Container,
@@ -46,7 +45,8 @@ const CartPage: React.FC = () => {
 
   const handleCheckout = async () => {
     if (!user) {
-      alert("Please login to place an order");
+      //alert("Please login to place an order");
+      toast.error("Please login to place an order");
       return;
     }
 
@@ -123,7 +123,16 @@ const CartPage: React.FC = () => {
                     }}
                   >
                     <IconButton
-                      onClick={() => dispatch(removeFromCart(item.id))}
+                      onClick={() => {
+                        dispatch(removeFromCart(item.id));
+                        toast.error(`${item.title} removed from cart`, {
+                          style: {
+                            background: "#1A1A1A",
+                            color: "#FF9F0D",
+                            border: "1px solid #333",
+                          },
+                        });
+                      }}
                       sx={{ color: "#FF9F0D", mr: 1 }}
                       size="small"
                     >

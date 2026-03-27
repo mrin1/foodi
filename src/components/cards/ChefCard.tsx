@@ -25,7 +25,7 @@ const ChefCard: React.FC<ChefCardProps> = ({ name, designation, image }) => {
         '&:hover': { transform: 'translateY(-10px)' }
       }}
     >
-      {/* High-Quality Chef Image */}
+  
       <CardMedia
         component="img"
         height="320"
@@ -42,7 +42,7 @@ const ChefCard: React.FC<ChefCardProps> = ({ name, designation, image }) => {
           {designation}
         </Typography>
 
-        {/* Professional Social Links (Connected Design) */}
+      
         <Stack direction="row" spacing={1} justifyContent="center">
           {[
             { icon: <FacebookIcon fontSize="small" />, color: '#1877F2' },

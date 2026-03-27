@@ -1,15 +1,16 @@
-
+import React, { useEffect } from 'react';
 import { 
   Box, 
   Container, 
   Typography, 
- Grid, 
+  Grid, 
   Card, 
   CardContent, 
   CardMedia, 
   IconButton, 
   Stack, 
-  styled 
+  styled,
+  CircularProgress
 } from '@mui/material';
 import { 
   Facebook, 
@@ -18,55 +19,10 @@ import {
   LinkedIn 
 } from '@mui/icons-material';
 
-interface Chef {
-  id: number;
-  name: string;
-  role: string;
-  image: string;
-  socials: {
-    facebook: string;
-    twitter: string;
-    instagram: string;
-    linkedin: string;
-  };
-}
-import ChefImage from "../../assets/images/home/chef-img.png"
-import ChefImage1 from "../../assets/images/home/chef-img1.png"
-import ChefImage2 from "../../assets/images/home/chef-img2.png"
-import ChefImage3 from "../../assets/images/home/chef-img3.png"
+import { useAppDispatch, useAppSelector } from "../../hooks/utils/redux";
+import { fetchChefs } from "../../hooks/redux-toolkit/slice/chef.slice";
 
-const CHEF_DATA: Chef[] = [
-  {
-    id: 1,
-    name: 'Masum Rana',
-    role: 'Master Chef',
-    image: ChefImage,
-    socials: { facebook: '#', twitter: '#', instagram: '#', linkedin: '#' }
-  },
-  {
-    id: 2,
-    name: 'Manisha Agarwal',
-    role: 'Senior Chef',
-    image: ChefImage1,
-    socials: { facebook: '#', twitter: '#', instagram: '#', linkedin: '#' }
-  },
-  {
-    id: 3,
-    name: 'Muhibbur Rashid',
-    role: 'Master Chef',
-    image: ChefImage2,
-    socials: { facebook: '#', twitter: '#', instagram: '#', linkedin: '#' }
-  },
-  {
-    id: 4,
-    name: 'Rashed Kabir',
-    role: 'Master Chef',
-    image: ChefImage3,
-    socials: { facebook: '#', twitter: '#', instagram: '#', linkedin: '#' }
-  }
-];
-
-const StyledCard = styled(Card)(({}) => ({
+const StyledCard = styled(Card)(() => ({
   backgroundColor: '#111827', 
   color: '#ffffff',
   borderRadius: '16px',
@@ -77,7 +33,7 @@ const StyledCard = styled(Card)(({}) => ({
   },
 }));
 
-const SocialIconButton = styled(IconButton)(({}) => ({
+const SocialIconButton = styled(IconButton)(() => ({
   backgroundColor: '#1f2937',
   color: '#ffffff',
   margin: '0 4px',
@@ -87,7 +43,17 @@ const SocialIconButton = styled(IconButton)(({}) => ({
   },
 }));
 
-const ChefGallery = () => {
+const ChefGallery: React.FC = () => {
+ 
+  const dispatch = useAppDispatch();
+  const { items, loading } = useAppSelector((state) => state.chef);
+
+  useEffect(() => {
+    if (items.length === 0) {
+      dispatch(fetchChefs());
+    }
+  }, [dispatch, items.length]);
+
   return (
     <Box sx={{ bgcolor: '#0b0f19', py: 10, minHeight: '100vh' }}>
       <Container maxWidth="lg">
@@ -114,46 +80,53 @@ const ChefGallery = () => {
           </Typography>
         </Box>
 
-        <Grid container spacing={4}>
-          {CHEF_DATA.map((chef) => (
-            <Grid size={{ xs: 12, sm: 6, md: 3 }} key={chef.id}>
-              <StyledCard elevation={0}>
-                <Box sx={{ p: 2 }}>
-                  <CardMedia
-                    component="img"
-                    height="280"
-                    image={chef.image}
-                    alt={chef.name}
-                    sx={{ borderRadius: '12px', objectFit: 'cover' }}
-                  />
-                </Box>
-                <CardContent sx={{ textAlign: 'center', pt: 0 }}>
-                  <Typography variant="h6" sx={{ fontWeight: 'bold' }}>
-                    {chef.name}
-                  </Typography>
-                  <Typography variant="body2" sx={{ color: '#9ca3af', mb: 2 }}>
-                    {chef.role}
-                  </Typography>
-                  
-                  <Stack direction="row" justifyContent="center" spacing={1}>
-                    <SocialIconButton size="small">
-                      <Facebook fontSize="small" />
-                    </SocialIconButton>
-                    <SocialIconButton size="small">
-                      <X fontSize="small" />
-                    </SocialIconButton>
-                    <SocialIconButton size="small">
-                      <Instagram fontSize="small" />
-                    </SocialIconButton>
-                    <SocialIconButton size="small">
-                      <LinkedIn fontSize="small" />
-                    </SocialIconButton>
-                  </Stack>
-                </CardContent>
-              </StyledCard>
-            </Grid>
-          ))}
-        </Grid>
+        {loading && items.length === 0 ? (
+          <Box display="flex" justifyContent="center" py={10}>
+            <CircularProgress sx={{ color: '#ff6b00' }} />
+          </Box>
+        ) : (
+          <Grid container spacing={4}>
+          
+            {items.slice(0, 4).map((chef) => (
+              <Grid size={{ xs: 12, sm: 6, md: 3 }} key={chef.$id}>
+                <StyledCard elevation={0}>
+                  <Box sx={{ p: 2 }}>
+                    <CardMedia
+                      component="img"
+                      height="280"
+                      image={chef.image} 
+                      alt={chef.name}
+                      sx={{ borderRadius: '12px', objectFit: 'cover' }}
+                    />
+                  </Box>
+                  <CardContent sx={{ textAlign: 'center', pt: 0 }}>
+                    <Typography variant="h6" sx={{ fontWeight: 'bold' }}>
+                      {chef.name} 
+                    </Typography>
+                    <Typography variant="body2" sx={{ color: '#9ca3af', mb: 2 }}>
+                      {chef.designation} 
+                    </Typography>
+                    
+                    <Stack direction="row" justifyContent="center" spacing={1}>
+                      <SocialIconButton size="small">
+                        <Facebook fontSize="small" />
+                      </SocialIconButton>
+                      <SocialIconButton size="small">
+                        <X fontSize="small" />
+                      </SocialIconButton>
+                      <SocialIconButton size="small">
+                        <Instagram fontSize="small" />
+                      </SocialIconButton>
+                      <SocialIconButton size="small">
+                        <LinkedIn fontSize="small" />
+                      </SocialIconButton>
+                    </Stack>
+                  </CardContent>
+                </StyledCard>
+              </Grid>
+            ))}
+          </Grid>
+        )}
       </Container>
     </Box>
   );

@@ -17,6 +17,7 @@ import SingleBlogPage from "../pages/SingleBlogPage";
 import AdminProtected from "../components/common/AdminProtected";
 import OrderManagement from "../pages/admin/OrderManagement";
 import ContactManagement from "../pages/admin/ContactManagement";
+import AdminReservations from "../pages/admin/AdminReservations";
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -98,6 +99,10 @@ export const router = createBrowserRouter([
           {
             path: "contact", 
             element: <ContactManagement/>,
+          },
+           {
+            path: "reservation", 
+            element: <AdminReservations/>,
           },
         ],
       },

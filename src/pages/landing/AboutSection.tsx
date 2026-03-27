@@ -8,6 +8,7 @@ import {
   styled 
 } from '@mui/material';
 import AboutImg from '../../assets/images/home/about-img.png';
+import { useNavigate } from 'react-router-dom';
 
 
 const SectionWrapper = styled(Box)(({ theme }) => ({
@@ -92,6 +93,7 @@ const ImageWrapper = styled(Box)({
 
 
 const CoffeeAboutSection: React.FC = () => {
+   const navigate = useNavigate()
   return (
     <SectionWrapper>
       <Container maxWidth="lg">
@@ -115,7 +117,7 @@ const CoffeeAboutSection: React.FC = () => {
                 massa netus.
               </DescriptionText>
               
-              <ActionButton variant="contained">
+              <ActionButton variant="contained" onClick={()=> navigate("/about")}>
                 Read More
               </ActionButton>
             </ContentBox>

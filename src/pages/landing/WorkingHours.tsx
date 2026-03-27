@@ -8,6 +8,7 @@ import {
   Paper,
   styled,
 } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
 const COLORS = {
   accent: '#E1914D', 
@@ -66,6 +67,7 @@ const GlassScheduleCard = styled(Paper)({
 });
 
 const WorkingHours: React.FC = () => {
+  const navigate = useNavigate()
   return (
     <HeroWrapper>
       <Container maxWidth="lg">
@@ -110,7 +112,7 @@ const WorkingHours: React.FC = () => {
                 Working Hours
               </Typography>
 
-              <ContactUsButton variant="contained" disableElevation>
+              <ContactUsButton variant="contained" disableElevation onClick={()=>navigate("/contact")}>
                 Contact Us
               </ContactUsButton>
             </Box>

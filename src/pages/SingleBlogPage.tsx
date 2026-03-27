@@ -15,7 +15,7 @@ const SingleBlogPage: React.FC = () => {
           
           <Grid size={{xs:12, md:8}}>
             <Stack spacing={4}>
-              {/* Main Image with 24px Radius */}
+            
               <Box sx={{ borderRadius: '24px', overflow: 'hidden', height: { md: '500px' } }}>
                 <CardMedia 
                   component="img" 

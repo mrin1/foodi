@@ -163,10 +163,9 @@ const Navbar = () => {
                 sx={{ color: "#fff" }}
                 onClick={() => navigate("/cart")}
               >
-          
                 <Badge
                   badgeContent={totalItems}
-                  showZero={false} 
+                  showZero={false}
                   sx={{
                     "& .MuiBadge-badge": {
                       backgroundColor: "#E48C46",
@@ -239,6 +238,30 @@ const Navbar = () => {
               </ListItemButton>
             </ListItem>
           ))}
+
+          {/* --- NEW: MOBILE LOGIN BUTTON --- */}
+          {/* This adds the login button to the bottom of the mobile menu */}
+          <ListItem disablePadding sx={{ mt: 4, px: 3 }}>
+            <Button
+              variant="contained"
+              fullWidth
+              onClick={() => {
+                setOpenLogin(true); // Open the popup
+                handleDrawerToggle(); // Close the drawer menu
+              }}
+              sx={{
+                backgroundColor: "#E48C46",
+                color: "#fff",
+                borderRadius: "12px",
+                padding: "10px 0",
+                fontWeight: "bold",
+                "&:hover": { backgroundColor: "#d17b38" },
+              }}
+            >
+              LOGIN
+            </Button>
+          </ListItem>
+          {/* --- END NEW --- */}
         </List>
       </Drawer>
     </Box>

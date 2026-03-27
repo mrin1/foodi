@@ -5,27 +5,28 @@ import BlogCard from "../components/cards/BlogCard";
 import { useAppDispatch, useAppSelector } from "../hooks/utils/redux";
 import { fetchBlogs } from "../hooks/redux-toolkit/slice/blog.slice";
 
-
 const BlogPage: React.FC = () =>  {
   const dispatch = useAppDispatch();
   
   const { items, loading, error } = useAppSelector((state) => state.blogs);
 
   useEffect(() => {
-    dispatch(fetchBlogs());
-  }, [dispatch]);
+   
+    if (items.length === 0) {
+      dispatch(fetchBlogs());
+    }
+  }, [dispatch, items.length]);
 
   return (
     <Box sx={{ bgcolor: "#0D0D0D", minHeight: "100vh", pb: 10 }}>
       <PageHeader title="Latest news & blog" breadcrumb="Blog" />
 
       <Container maxWidth="lg" sx={{ mt: 10 }}>
-        {loading ? (
+        {loading && items.length === 0 ? (
           <Box sx={{ display: "flex", justifyContent: "center", py: 10 }}>
             <CircularProgress sx={{ color: "#E48C46" }} />
           </Box>
         ) : error ? (
-         
           <Typography color="error" align="center">
             {error}
           </Typography>

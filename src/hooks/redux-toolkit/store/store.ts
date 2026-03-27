@@ -6,6 +6,7 @@ import blogsReducer from "../slice/blog.slice";
 import orderReducer from "../slice/order.slice";
 import cartReducer from "../slice/cart.slice";
 import contactReducer from "../slice/contact.slice";
+import reservationReducer from "../slice/reservation.slice";
 export const store = configureStore({
   reducer: {
     auth: authReducer,
@@ -15,5 +16,7 @@ export const store = configureStore({
     order: orderReducer,
     cart: cartReducer,
     contact: contactReducer,
+     reservation: reservationReducer,
+
   },
 });

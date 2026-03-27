@@ -60,6 +60,11 @@ const AdminLayout: React.FC = () => {
       icon: <ArticleIcon />,
       path: "/admin/contact",
     },
+    {
+      text: "reservation",
+      icon: <ArticleIcon />,
+      path: "/admin/reservation",
+    },
   ];
 
   return (

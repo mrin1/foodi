@@ -34,8 +34,7 @@ const FEATURE_DATA: FeatureItem[] = [
 ];
 
 const FeaturesSection: React.FC = () => {
-  //const theme = useTheme();
-
+ 
   return (
     <Box
       component="section"

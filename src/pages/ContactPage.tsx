@@ -337,7 +337,7 @@ const ContactPage: React.FC = () => {
   );
 };
 
-// Reusable Styles
+
 const inputSx = {
   bgcolor: "#1a242b",
   borderRadius: "8px",
