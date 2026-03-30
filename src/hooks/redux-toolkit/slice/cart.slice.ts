@@ -23,7 +23,6 @@ interface CartState {
   error: string | null;
 }
 
-// FIX: Helper function to load cart from LocalStorage on app start
 const loadCartFromStorage = (): CartItem[] => {
   try {
     const savedCart = localStorage.getItem("foodi_cart");
@@ -33,7 +32,6 @@ const loadCartFromStorage = (): CartItem[] => {
   }
 };
 
-// FIX: Helper function to save cart to LocalStorage
 const saveCartToStorage = (items: CartItem[]) => {
   localStorage.setItem("foodi_cart", JSON.stringify(items));
 };
@@ -50,28 +48,43 @@ export const placeOrder = createAsyncThunk(
     orderData: {
       userId: string;
       userName: string;
-      items: CartItem[];
+      items: CartItem[] | any;
       total: number;
-      pdf: string;
+      pdf?: string;
     },
     { rejectWithValue },
   ) => {
     try {
+      const rawItems =
+        typeof orderData.items === "string"
+          ? JSON.parse(orderData.items)
+          : orderData.items;
+
+      const leanItems = rawItems.map((item: any) => ({
+        id: item.id,
+        title: item.title,
+        price: Number(item.price),
+        qty: Number(item.qty),
+      }));
+
+      const safeItemsString = JSON.stringify(leanItems);
+
       const response = await databases.createDocument(
         DATABASE_ID,
         ORDERS_COLLECTION_ID,
         ID.unique(),
         {
-          userId: orderData.userId, // MUST match Attribute Key in Appwrite
-          name: orderData.userName, // MUST match Attribute Key in Appwrite
-          items: JSON.stringify(orderData.items),
-          totalAmount: orderData.total, // Check if you named it 'total' or 'totalAmount' in Appwrite
+          userId: String(orderData.userId),
+          name: String(orderData.userName),
+          items: safeItemsString,
+          totalAmount: Number(orderData.total),
           status: "pending",
-          pdf: orderData.pdf,
+          pdf: String(orderData.pdf || ""),
         },
       );
       return response;
     } catch (error: any) {
+      console.error("APPWRITE DB ERROR:", error);
       return rejectWithValue(error.message || "Failed to place order");
     }
   },
@@ -121,7 +134,6 @@ const cartSlice = createSlice({
       })
       .addCase(placeOrder.fulfilled, (state) => {
         state.loading = false;
-        state.items = [];
       })
       .addCase(placeOrder.rejected, (state, action) => {
         state.loading = false;
